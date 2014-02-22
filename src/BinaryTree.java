@@ -52,6 +52,16 @@ public class BinaryTree {
 	}
 
 	public void delete(int key){
+		Node current=root;
+		Node parent=root;
 		
+		while(current.key!=key){
+			parent=current;
+			if(current.key>key){
+				current=current.left;
+			}else{
+				current=current.right;
+			}
+		}
 	}
 }
