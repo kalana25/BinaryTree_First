@@ -51,17 +51,72 @@ public class BinaryTree {
 		}
 	}
 
-	public void delete(int key){
+	public boolean delete(int key){
 		Node current=root;
 		Node parent=root;
+		boolean leftchild=true;
 		
 		while(current.key!=key){
 			parent=current;
 			if(current.key>key){
+				leftchild=true;
 				current=current.left;
 			}else{
-				current=current.right;
+				leftchild=false;
+				current=current.right;				
+			}
+			if(current==null){
+				return false;
 			}
 		}
+		//either root or leaf node.
+		if(current.left==null && current.right==null){
+			if(current==root)
+				root=null;
+			else if(leftchild)
+				parent.left=null;
+			else
+				parent.right=null;		
+		}else if(current.right==null){			//Node to be deleted has only one child
+			if(current==root)
+				root=current.left;
+			else if(leftchild)
+				parent.left=current.left;
+			else
+				parent.right=current.left;
+		}else if(current.left==null){
+			if(current==root)
+				root=current.right;
+			else if(leftchild)
+				parent.left=current.right;
+			else
+				parent.right=current.right;
+		}else{
+			Node succ=getSuccessor(current);
+			if(current==root)
+				root=succ;
+			else if(leftchild)
+				parent.left=succ;
+			else
+				parent.right=succ;
+			succ.left=current.left;
+		}
+		return true;
+	}
+	
+	public Node getSuccessor(Node delNode){		
+		Node successorPare=delNode;
+		Node successor=delNode;
+		Node curr=delNode.right;
+		while(curr!=null){
+			successorPare=successor;
+			successor=curr;
+			curr=curr.left;
+		}
+		if(successor!=delNode.right){
+			successorPare.left=successor.right;
+			successor.right=delNode.right;
+		}
+		return successor;
 	}
 }

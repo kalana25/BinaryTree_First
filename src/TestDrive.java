@@ -17,8 +17,12 @@ public class TestDrive {
 		bst.insertNode(60, "QTC");
 		bst.insertNode(57, "DW");
 		int k=33;
-		System.out.println("Title of the key= "+k+" is "+(bst.find(k)).value);
+//		System.out.println("Title of the key= "+k+" is "+(bst.find(k)).value);
 		bst.inOrderTraversal(bst.find(63));
+		System.out.println();
+		bst.delete(63);
+		bst.inOrderTraversal(bst.find(70));
+		
 
 	}
 
